@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>表格 - 資料型</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./libs/fontawesome/css/all.min.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="table_prof">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">表格</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">資料型</span>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div class="block block-table">
+      <div class="block_head">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="far fa-address-card fa-fw"></i>
+          </span>
+          <span class="title_item">資料型表格</span>
+        </div>
+      </div>
+      <div class="block_content">
+        <div class="table_toolbar d-flex flex-row flex-wrap justify-content-end align-items-center">
+          <span id="colFilter" class="toolbar_item item-button" data-toggle="modal" data-target="#colFilterModal"><i class="fas fa-cog fa-fw"></i></span>
+        </div>
+        <div class="table_pagination d-flex flex-row flex-wrap justify-content-end align-items-center">
+          <form class="pagination_perpage form-inline">
+            <span>每頁</span>
+            <select class="pagination_size pagination_item item-form form-control custom-select custom-select-sm" onChange="changePageSize()">
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <span>筆</span>
+          </form>
+          <span class="pagination_info">
+            當前顯示第 <span class="dataStart">0</span> 至 <span class="dataEnd">0</span> 筆，總筆數 <span class="dataTotal">0</span>
+          </span>
+          <ul class="pagination pagination-sm pagination_btnGroup"></ul>
+        </div>
+        <div class="table_wrapper">
+          <div id="table"></div>
+        </div>
+        <div class="table_pagination d-flex flex-row flex-wrap justify-content-end align-items-center">
+          <form class="pagination_perpage form-inline">
+            <span>每頁</span>
+            <select class="pagination_size pagination_item item-form form-control custom-select custom-select-sm" onChange="changePageSize()">
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <span>筆</span>
+          </form>
+          <span class="pagination_info">
+            當前顯示第 <span class="dataStart">0</span> 至 <span class="dataEnd">0</span> 筆，總筆數 <span class="dataTotal">0</span>
+          </span>
+          <ul class="pagination pagination-sm pagination_btnGroup"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="colFilterModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">欄位過濾</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fas fa-times fa-fw"></i></span>
+            </button>
+          </div>
+          <div id="colFilterConfigs" class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateColFilter()">設定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript" src="./libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+var resultTable_header = [
+  {'index': 'orderno',      'title': '訂單號',      'visible': true,  'visibleLock': true},
+  {'index': 'scode',        'title': '服務代號',    'visible': true,  'visibleLock': false},
+  {'index': 'paytype',      'title': '支付別',      'visible': true,  'visibleLock': false},
+  {'index': 'orderamount',  'title': '金額',        'visible': true,  'visibleLock': false},
+  {'index': 'fees',         'title': '手續費',      'visible': false,  'visibleLock': false},
+  {'index': 'createtime',   'title': '交易時間',    'visible': true,  'visibleLock': false},
+  {'index': 'tstate',       'title': '狀態',        'visible': true,  'visibleLock': false},
+  {'index': 'acctno',       'title': '銀行帳號',    'visible': true,  'visibleLock': false},
+  {'index': 'acctname',     'title': '持有人姓名',  'visible': false,  'visibleLock': false}
+];
+// TODO: data source get from api
+var resultTable_data = [
+  {'orderno': 'T10778984', 'scode':'0031', 'paytype':1, 'orderamount': 485, 'fees': 10, 'createtime': '2019-04-10 07:03:04', 'tstate': 'done', 'acctno': '159715781426', 'acctname': 'test account 1'},
+  {'orderno': 'T11057841', 'scode':'1058', 'paytype':2, 'orderamount': 1028, 'fees': 10, 'createtime': '2019-04-28 21:26:15', 'tstate': 'processing', 'acctno': '154824758961', 'acctname': 'test account 2'}
+];
+
+var paginationParameterObj = {
+  pageIndex: '1',
+  pageSize: '10',
+  recordcount: '27',
+};
+
+$(document).ready(function (){
+  render();
+  queryData();
+});
+
+function render () {
+  renderResultTable();
+};
+function queryData() {
+  // TODO api to fetch data
+  updateTablePaginationSize();
+  updateTablePagination();
+};
+
+function renderResultTable () {
+  renderResultTable_colFilter();
+  renderResultTable_profile();
+};
+function renderResultTable_colFilter() {
+  var str = '';
+  var str_visible = '';
+  var str_visibleLock = '';
+
+  for(var i=0; i<resultTable_header.length; i++)
+  {
+    str_visible = (resultTable_header[i].visible)? 'checked':'';
+    str_visibleLock = (resultTable_header[i].visibleLock)? 'disabled':'';
+
+    str += ('<div class="custom-control custom-checkbox">');
+    str += ('<input type="checkbox" class="custom-control-input" id="col_'+ resultTable_header[i].index +'" '+str_visible+' '+str_visibleLock+'>');
+    str += ('<label class="custom-control-label" for="col_'+ resultTable_header[i].index +'">'+ resultTable_header[i].title +'</label>');
+    str += ('</div>');
+  };
+  $('#colFilterConfigs').html(str);
+};
+function renderResultTable_profile() {
+  var th_count = 0;
+  var str = '';
+  if(0 < resultTable_data.length)
+  {
+    for(var i=0; i < resultTable_data.length; i++)
+    {
+      str += ('<table class="table table-prof">');
+      for(var j=0; j < resultTable_header.length; j++)
+      {
+        if(resultTable_header[j].visible)
+        {
+          str += ('<tr>');
+          str += ('<th class="text-right">' + resultTable_header[j].title + '</th>');
+          str += ('<td>' + resultTable_data[i][resultTable_header[j].index] + '</td>');
+          str += ('</tr>');
+        };
+      };
+      str += ('</table>');
+    };
+  } else {
+    str += ('<table>');
+    str += ('<tr><td class="text-center">表中數據為空</td></tr>');
+    str += ('</table>');
+  };
+  $('#table').html(str);
+};
+
+function updateColFilter () {
+  for(var i=0; i<resultTable_header.length; i++) {
+    if(resultTable_header[i].visibleLock)
+    {
+      resultTable_header[i].visible = true;
+    } else {
+      resultTable_header[i].visible = $('#col_' + resultTable_header[i].index).prop('checked');
+    };
+  };
+  renderResultTable();
+};
+function updateTablePaginationSize () {
+  $('.pagination_size').val(paginationParameterObj.pageSize);
+};
+function updateTablePagination () {
+  var str_pagination_btnGroup = '';
+
+  var num_pageIndex = parseInt(paginationParameterObj.pageIndex);
+  var num_pageSize = parseInt(paginationParameterObj.pageSize);
+
+  var num_dataTotal = parseInt(paginationParameterObj.recordcount);
+  var num_dataEnd = Math.min(num_dataTotal, (num_pageIndex * num_pageSize));
+  var num_dataStart = Math.min(num_dataEnd, ((num_pageIndex-1) * num_pageSize) + 1);
+
+  var num_pageTotal = Math.ceil(num_dataTotal/num_pageSize);
+  var num_pageGroupSize = 7;
+  var num_pageGroupIndex = Math.ceil(num_pageIndex/num_pageGroupSize);
+  var num_pageGroupEnd = Math.min(num_pageTotal, (num_pageGroupIndex * num_pageGroupSize));
+  var num_pageGroupStart = Math.min(num_pageGroupEnd, ((num_pageGroupIndex-1) * num_pageSize) + 1);
+
+  // pagination_info
+  $('.dataStart').html(num_dataStart);
+  $('.dataEnd').html(num_dataEnd);
+  $('.dataTotal').html(num_dataTotal);
+
+  // pagination_btnGroup
+  var str_preBtnDisabled = (1 === num_pageIndex)? 'disabled' : '';
+  var str_nextBtnDisabled = (num_pageTotal === num_pageIndex)? 'disabled' : '';
+
+  if(0 !== num_pageGroupStart)
+  {
+    str_pagination_btnGroup += ('<li class="page-item '+ str_preBtnDisabled +'">');
+    str_pagination_btnGroup += ('<a class="page-link" '+ str_preBtnDisabled +' onClick="changePage('+ ((1 === num_pageIndex)? 0 : (num_pageIndex-1)) +')">上一頁</a>');
+    str_pagination_btnGroup += ('</li>');
+    for(var i=num_pageGroupStart; i<=num_pageGroupEnd; i++)
+    {
+      var str_pageActive = (i === num_pageIndex)? 'active' : '';
+      str_pagination_btnGroup += ('<li class="page-item '+ str_pageActive +'">');
+      str_pagination_btnGroup += ('<a class="page-link" '+ str_pageActive +' onClick="changePage('+ i +')">'+ i +'</a>');
+      str_pagination_btnGroup += ('</li>');
+    };
+    str_pagination_btnGroup += ('<li class="page-item '+ str_nextBtnDisabled +'">');
+    str_pagination_btnGroup += ('<a class="page-link" '+ str_nextBtnDisabled +' onClick="changePage('+ (num_pageIndex+1) +')">下一頁</a>');
+    str_pagination_btnGroup += ('</li>');
+  }
+  $('.pagination_btnGroup').html(str_pagination_btnGroup);
+}
+
+function changePageSize () {
+  paginationParameterObj.pageSize = $('.pagination_size').val();
+  paginationParameterObj.pageIndex = '1';
+  queryData();
+}
+function changePage(pageIndex) {
+  paginationParameterObj.pageIndex = pageIndex;
+  queryData();
+}
+</script>
+</body>
+</html>

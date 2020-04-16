@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>管理後台</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./libs/fontawesome/css/all.min.css">
+<style>
+  #home {
+    min-height: 100vh;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  #home.collapse-menu .home_aside {
+    left: -15rem;
+  }
+  #home.collapse-menu .aside_body {
+    width: 15rem;
+  }
+  #home.collapse-menu .home_content {
+    margin-left: 0;
+  }
+  .home_aside {
+    -webkit-transition: left 0.3s ease-in-out;
+    -o-transition: left 0.3s ease-in-out;
+    transition: left 0.3s ease-in-out;
+    position:absolute;
+    width: 15rem;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    overflow: auto;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: var(--grey-color-ddd);
+    padding: 0 3px 0 0;
+  }
+  .aside_body {
+    color: var(--grey-color-d);
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .home_content {
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    width: 100vw;
+    margin-left: 15rem;
+    overflow: hidden;
+  }
+  .header_account {
+    padding: 0 0.5rem;
+    width: 100%;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    white-space: nowrap; 
+  }
+  .home_menuButton {
+    width: 2.5rem;
+    float: left;
+  }
+  .home_logoutButton {
+    float: right;
+  }
+  .menu_button {
+    color: var(--default-color);
+    padding: .5rem;
+    cursor: pointer;
+    line-height: 2rem;
+    text-align: center;
+  }
+  @media (max-width: 575.98px) {
+    .menu_button .button_text {
+      display: none;
+    }
+  }
+  .menu_layer {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .menu_layer.layer-1 .menu-item {
+    padding: 0.2rem 1rem;
+  }
+  .menu_layer.layer-2 .menu-item {
+    padding: 0.2rem 2rem;
+  }
+  .menu_layer.collapsed {
+    display: none;
+  }
+  .menu-item {
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .menu-item.active {
+    background-color: var(--primary-color-dd);
+    color: var(--grey-color-lll);
+  }
+  .menu-item:hover {
+    background-color: var(--primary-color-d);
+    color: var(--grey-color-lll);
+  }
+  .menu-button {
+    -webkit-transform-origin: 50%,50%;
+        -ms-transform-origin: 50%,50%;
+            transform-origin: 50%,50%;
+    -webkit-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out;
+    transition: -webkit-transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  }
+  .menu-button.collapsed {
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+  }
+  .content_header {
+    height: 3rem;
+    background-color: var(--primary-color);
+  }
+  .content_iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 3rem);
+  }
+  @media (max-width: 575.98px) { 
+    .content_iframe {
+      width: 100vw;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+    }
+  }
+</style>
+</head>
+<body class="body ot-overwrite">
+<div id="home">
+  <div class="home_aside">
+    <div class="aside_body">
+      <div id="body_menu"></div>
+    </div>
+  </div>
+  <div class="home_content">
+    <div class="content_header">
+      <div class="home_menuButton">
+        <div class="menu_button" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+      <div class="home_logoutButton">
+        <div class="menu_button" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="button_text">登出</span>
+        </div>
+      </div>
+    </div>
+    <iframe id="iframe" class="content_iframe" src=""></iframe>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/router.js"></script>
+<script type="text/javascript" src="./assets/js/account.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+var defaultPageIndex = 'dashboard'; // dashboard as default page
+
+$(document).ready(function (){
+
+  render();
+  update();
+});
+
+function render () {
+  renderAccName();
+  renderMenu();
+};
+function update() {
+  updateContent(defaultPageIndex)
+};
+
+function renderAccName () {
+  // TODO: Move to the place where used to load account
+  var str = '測試帳號';
+
+  $('.header_account').html(str);
+};
+function renderMenu () {
+  var menuArr = js_router.menu;
+  var str = '';
+
+  str += '<ul class="menu_layer layer-1">';
+  for(var layer1=0; layer1 < menuArr.length; layer1++)
+  {
+    var data_layer1 = menuArr[layer1];
+    str += '<li>';
+    if('object' == typeof data_layer1.children)
+    {
+      str += ('<div id="'+data_layer1.index+'" class="menu-item click-enable" onclick="menuCollapse(\''+data_layer1.index+'\')">');
+      str += ('<span>' + data_layer1.title + '</span>');
+      str += ('<div class="menu-button '+ ((data_layer1.defaultCollapsed)? 'collapsed' : '') +'"><i class="fas fa-caret-down"></i></div>');
+      str += ('</div>');
+      str += '<ul id="'+data_layer1.index+'_submenu" class="menu_layer layer-2 '+ ((data_layer1.defaultCollapsed)? 'collapsed' : '') +'">';
+      for(var layer2=0; layer2 < menuArr[layer1].children.length; layer2++)
+      {
+        var data_layer2 = menuArr[layer1].children[layer2];
+        str += ('<li>');
+        str += ('<div id="'+data_layer2.index+'" class="menu-item click-enable" onclick="menuRedirect(\''+data_layer2.path+'\')">' + data_layer2.title +'</div>');
+        str += '</li>';
+      }
+      str += '</ul>';
+    }
+    else {
+      str += ('<div id="'+data_layer1.index+'" class="menu-item click-enable" onclick="menuRedirect(\''+data_layer1.path+'\')">' + data_layer1.title +'</div>');
+    }
+    str += '</li>';
+  };
+  str += '</ul>';
+
+  $('#body_menu').html(str);
+
+  // init menu
+  menuRedirect('dashboard');
+};
+
+function updateContent(index) {
+  $('#iframe').attr('src', js_router.get(index).path);
+};
+
+function toggleMenu () {
+  var home = $('#home');
+  if(home.hasClass('collapse-menu')) {
+    home.removeClass('collapse-menu');
+  } else {
+    home.addClass('collapse-menu');
+  }
+};
+function menuRedirect (route) {
+  var target = $('#'+route);
+  var origin_state = target.hasClass('active');
+  if(!origin_state)
+  {
+    $('.menu-item.active').removeClass('active');
+    target.addClass('active')
+
+    updateContent(route);
+  };
+};
+function menuCollapse (route) {
+  var target = $('#'+route+' .menu-button');
+  var targetSubmenu = $('#'+route+'_submenu');
+  var origin_state = target.hasClass('collapsed');
+  if(origin_state)
+  {
+    target.removeClass('collapsed');
+    targetSubmenu.stop().slideDown().removeClass('collapsed');
+  }
+  else
+  {
+    target.addClass('collapsed');
+    targetSubmenu.stop().slideUp().addClass('collapsed');
+  }
+}
+
+function logout () {
+  document.location.href = js_router.get('account_login').path;
+};
+</script>
+</body>
+</html>

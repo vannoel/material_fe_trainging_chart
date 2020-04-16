@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>統計圖 - 直方圖</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/fontawesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/apexcharts/apexcharts.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="chart_histogram">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">統計圖</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">直方圖</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div id="block_basic"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('basic')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">基本</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_basic" class="block_chart"></div>
+      </div>
+    </div>
+    
+    <div class="divider"></div>
+  
+    <div id="block_stacked"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('stacked')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">堆疊</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_stacked" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  
+    <div id="block_rate"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('rate')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">堆疊百分比</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_rate" class="block_chart"></div>
+      </div>
+    </div>
+  
+    <div class="divider"></div>
+  
+    <div id="block_labeled"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('labeled')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">附加標籤</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_labeled" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  
+    <div id="block_negative"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('negative')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">優劣分色</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_negative" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  
+    <div id="block_range"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('range')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">區間</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_range" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  
+    <div id="block_distributed"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('distributed')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">區分色</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_distributed" class="block_chart"></div>
+      </div>
+    </div>
+  </div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/chart.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./libs/apexcharts/apexcharts.min.js"></script>
+
+<script type="text/javascript">
+var chartList = {
+  basic: undefined,
+  stacked: undefined,
+  rate: undefined,
+  labeled: undefined,
+  negative: undefined,
+  range: undefined,
+  distributed: undefined,
+  dynamic: undefined
+}
+
+$(document).ready(function (){
+  setCharts();
+  render();
+});
+
+function setCharts () {
+  setBasic();
+  setStacked();
+  setRate();
+  setLabeled();
+  setNegative();
+  setRange();
+  setDistributed();
+};
+
+function render () {
+  toggleChart('basic', true);
+  toggleChart('stacked', false);
+  toggleChart('rate', false);
+  toggleChart('labeled', false);
+  toggleChart('negative', false);
+  toggleChart('range', false);
+  toggleChart('distributed', false);
+};
+
+function setBasic () {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded'	
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    series: [
+      {
+        name: 'Type 1',
+        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+      }, {
+        name: 'Type 2',
+        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+      }, {
+        name: 'Type 3',
+        data: [12, 41, 36, 15, 46, 48, 52, 66, 25]
+      }, {
+        name: 'Type 4',
+        data: [81, 33, 35, 26, 55, 41, 47, 15, 34]
+      }, {
+        name: 'Type 5',
+        data: [26, 18, 50, 55, 15, 78, 15, 55, 26]
+      }, {
+        name: 'Type 6',
+        data: [68, 94, 61, 48, 28, 14, 56, 97, 45]
+      }, {
+        name: 'Type 7',
+        data: [65, 36, 26, 67, 35, 56, 33, 23, 65]
+      }, {
+        name: 'Type 8',
+        data: [15, 87, 94, 26, 16, 48, 41, 87, 46]
+      }, {
+        name: 'Type 9',
+        data: [15, 19, 21, 25, 15, 16, 72, 89, 23]
+      }, {
+        name: 'Type 10',
+        data: [28, 64, 15, 76, 32, 12, 52, 53, 15]
+      }, {
+        name: 'Type 11',
+        data: [24, 58, 20, 26, 46, 16, 38, 32, 67]
+      }, {
+        name: 'Type 12',
+        data: [32, 75, 15, 12, 76, 31, 23, 53, 32]
+      }
+    ],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+    },
+    yaxis: {
+      title: {
+        text: '$ (thousands)'
+      }
+    },
+    fill: {
+      opacity: 1
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return "$ " + val + " thousands"
+        }
+      }
+    }
+  }
+
+  chartList['basic'] = new ApexCharts(
+    document.querySelector("#chart_basic"),
+    options
+  );
+}
+function setStacked () {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+      stacked: true,
+      toolbar: {
+        show: true
+      },
+      zoom: {
+        enabled: true
+      }
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        legend: {
+          position: 'bottom',
+          offsetX: -10,
+          offsetY: 0
+        }
+      }
+    }],
+    plotOptions: {
+      bar: {
+        horizontal: false,
+      },
+    },
+    series: [{
+      name: 'PRODUCT A',
+      data: [44, 55, 41, 67, 22, 43]
+    },{
+      name: 'PRODUCT B',
+      data: [13, 23, 20, 8, 13, 27]
+    },{
+      name: 'PRODUCT C',
+      data: [11, 17, 15, 15, 21, 14]
+    },{
+      name: 'PRODUCT D',
+      data: [21, 7, 25, 13, 22, 8]
+    }],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      type: 'datetime',
+      categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT', '01/05/2011 GMT', '01/06/2011 GMT'],
+    },
+    legend: {
+      position: 'right',
+      offsetY: 40
+    },
+    fill: {
+      opacity: 1
+    },
+  }
+
+  chartList['stacked'] = new ApexCharts(
+    document.querySelector("#chart_stacked"),
+    options
+  );
+}
+function setRate () {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+      stacked: true,
+      stackType: '100%'
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        legend: {
+          position: 'bottom',
+          offsetX: -10,
+          offsetY: 0
+        }
+      }
+    }],
+    series: [{
+      name: 'PRODUCT A',
+      data: [44, 55, 41, 67, 22, 43, 21, 49]
+    },{
+      name: 'PRODUCT B',
+      data: [13, 23, 20, 8, 13, 27, 33, 12]
+    },{
+      name: 'PRODUCT C',
+      data: [11, 17, 15, 15, 21, 14, 15, 13]
+    }],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4'],
+    },
+    fill: {
+      opacity: 1
+    },
+    
+    legend: {
+      position: 'right',
+      offsetX: 0,
+      offsetY: 50
+    },
+  }
+
+  chartList['rate'] = new ApexCharts(
+    document.querySelector("#chart_rate"),
+    options
+  );
+}
+function setLabeled () {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          position: 'top', // top, center, bottom
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function (val) {
+        return val + "%";
+      },
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#304758"]
+      }
+    },
+    series: [{
+      name: 'Inflation',
+      data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+    }],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      position: 'top',
+      labels: {
+        offsetY: -18,
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: 'gradient',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5,
+          }
+        }
+      },
+      tooltip: {
+          enabled: true,
+          offsetY: -35,
+
+      }
+    },
+    fill: {
+      gradient: {
+        shade: 'light',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [50, 0, 100, 100]
+      },
+    },
+    yaxis: {
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: false,
+        formatter: function (val) {
+          return val + "%";
+        }
+      }
+    },
+    title: {
+      text: 'Monthly Inflation in Argentina, 2002',
+      floating: true,
+      offsetY: 320,
+      align: 'center',
+      style: {
+        color: '#444'
+      }
+    },
+  }
+
+  chartList['labeled'] = new ApexCharts(
+    document.querySelector("#chart_labeled"),
+    options
+  );
+}
+function setNegative() {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        colors: {
+          ranges: [
+            {
+              from: -100,
+              to: -46,
+              color: js_chartColor[2]
+            }, {
+              from: -45,
+              to: 0,
+              color: js_chartColor[3]
+            }
+          ]
+        },
+        columnWidth: '80%',
+      }
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    series: [{
+      name: 'Cash Flow',
+      data: [
+        1.45,   5.42,   5.9,  -0.42,  -12.6, -18.1,
+        -18.2, -14.16, -11.1, -6.09,   0.34,  3.88, 
+        13.07,  5.8,    2,     7.37,   8.1,   13.57, 
+        15.75,  17.1,   19.8, -27.03, -54.4, -47.2, 
+        -43.3, -18.6,  -48.6, -41.1,  -39.6, -37.6, 
+        -29.4, -21.4,  -2.4
+      ]
+    }],
+    colors: js_chartColor, // customized color map
+    yaxis: {
+      title: {
+        text: 'Growth',
+      },
+      labels: {
+        formatter: function (y) {
+          return y.toFixed(0) + "%";
+        }
+      }
+    },
+    xaxis: {
+      // TODO: uncomment below and fix the error
+      //type: 'datetime',
+      categories: [
+        '2011-01-01', '2011-02-01', '2011-03-01', '2011-04-01', '2011-05-01', '2011-06-01',
+        '2011-07-01', '2011-08-01', '2011-09-01', '2011-10-01', '2011-11-01', '2011-12-01',
+        '2012-01-01', '2012-02-01', '2012-03-01', '2012-04-01', '2012-05-01', '2012-06-01',
+        '2012-07-01', '2012-08-01', '2012-09-01', '2012-10-01', '2012-11-01', '2012-12-01',
+        '2013-01-01', '2013-02-01', '2013-03-01', '2013-04-01', '2013-05-01', '2013-06-01',
+        '2013-07-01', '2013-08-01', '2013-09-01'
+      ],
+      labels: {
+        rotate: -90
+      }
+    }
+  }
+
+  chartList['negative'] = new ApexCharts(
+    document.querySelector("#chart_negative"),
+    options
+  );
+}
+function setRange() {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'rangeBar',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false
+      }
+    },
+    dataLabels: {
+      enabled: true
+    },
+    series: [
+      {
+        data: [
+          {
+            x: 'Team A',
+            y: [1, 5]
+          }, {
+            x: 'Team B',
+            y: [4, 6]
+          }, {
+            x: 'Team C',
+            y: [5, 8]
+          }, {
+            x: 'Team D',
+            y: [3, 11]
+          }
+        ]
+      }, {
+        data: [
+          {
+            x: 'Team A',
+            y: [2, 6]
+          }, {
+            x: 'Team B',
+            y: [1, 3]
+          }, {
+            x: 'Team C',
+            y: [7, 8]
+          }, {
+            x: 'Team D',
+            y: [5, 9]
+          }
+        ]
+      }
+    ],
+    colors: js_chartColor, // customized color map
+  }
+
+  chartList['range'] = new ApexCharts(
+      document.querySelector("#chart_range"),
+      options
+  );
+}
+function setDistributed() {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+      events: {
+        click: function(chart, w, e) {
+          console.log(chart, w, e )
+        }
+      },
+    },
+    colors: js_chartColor.slice(6), // customized color map
+    plotOptions: {
+      bar: {
+        columnWidth: '45%',
+        distributed: true
+      }
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    series: [{
+      data: [21, 22, 10, 28, 16, 21, 13, 30]
+    }],
+    xaxis: {
+      categories: ['John', 'Joe', 'Jake', 'Amber', 'Peter', 'Mary', 'David', 'Lily'],
+      labels: {
+        style: {
+          colors: js_chartColor, // customized color map
+          fontSize: '14px'
+        }
+      }
+    }
+  }
+
+  chartList['distributed'] = new ApexCharts(
+    document.querySelector("#chart_distributed"),
+    options
+  );
+}
+
+function toggleChart(id, trig) {
+  var trigger = false;
+  var count;
+  if(trig)
+  {
+    trigger = trig;
+  } else {
+    trigger = $('#block_'+id).hasClass('collapsed');
+  };
+  switch(id)
+  {
+    default:
+      if(trigger)
+      {
+        $('#block_'+id).removeClass('collapsed');
+        if(!$('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].render();
+          $('#chart_'+id).addClass('rendered');
+        }
+      } else {
+        $('#block_'+id).addClass('collapsed');
+        if($('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].destroy();
+          $('#chart_'+id).removeClass('rendered');
+        }
+      };
+      break;
+  };
+};
+</script>
+</body>
+</html>

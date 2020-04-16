@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>儀表板</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./libs/fontawesome/css/all.min.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="dashboard">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">儀表板</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">總覽</span>
+    </div>
+  </div>
+
+  <div class="divider"></div> 
+
+  <div class="wrapper_body container-fluid">
+    <div class="block">
+      <div class="block_head">
+        <div class="block_title">
+          <form class="form-inline">
+            <span class="title_item item-icon">
+              <i class="fas fa-tachometer-alt fa-fw"></i>
+            </span>
+            <select class="title_item item-form form-control custom-select custom-select-sm" onChange="queryRevenue()">
+              <option value="1" selected>當日</option>
+              <option value="2">一周</option>
+              <option value="3">一個月</option>
+              <option value="4">總量</option>
+            </select>
+            <span class="title_item">營收總覽</span>
+          </form>
+        </div>
+      </div>
+      <div class="block_content row">
+        <div class="col-md-4">
+          <div class="widget widget-red">
+            <div class="widget_icon"><i class="fas fa-bookmark fa-fw"></i></div>
+            <div class="widget_body flex-grow-1">
+              <div class="widget_title">總營收</div>
+              <div id="totalrevenue" class="widget_content">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="widget widget-blue">
+            <div class="widget_icon"><i class="fas fa-university fa-fw"></i></div>
+            <div class="widget_body flex-grow-1">
+              <div class="widget_title">渠道總手續費</div>
+              <div id="totalfee" class="widget_content">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="widget widget-green">
+            <div class="widget_icon"><i class="fas fa-tag fa-fw"></i></div>
+            <div class="widget_body flex-grow-1">
+              <div class="widget_title">系統總手續費</div>
+              <div id="totalfee2" class="widget_content">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function (){
+  render();
+  update();
+});
+
+function render () {
+};
+function update () {
+  updateBalance();
+  updateRevenue();
+  updateDF();
+}
+function updateBalance() {
+  // TODO: update after load balance data 
+
+  $('#totalbalance').html(7);
+};
+function updateRevenue() {
+  // TODO: update after load revenue data
+
+  $('#totalrevenue').html(1);
+  $('#totalfee').html(2);
+  $('#totalfee2').html(3);
+};
+function updateDF() {
+  // TODO: update after load DF data
+
+  $('#totaldf').html(4);
+  $('#totaldffee').html(5);
+};
+
+function queryRevenue() {
+  // TODO: load balance data 
+  updateRevenue();
+}
+function queryDF() {
+  // TODO: load DF data 
+  updateDF();
+}
+</script>
+</body>
+</html>

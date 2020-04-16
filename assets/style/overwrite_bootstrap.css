@@ -1,0 +1,68 @@
+/* Overwrite Bootstrap */
+.ot-overwrite .form-row {
+  margin-bottom: 1rem;
+}
+
+.ot-overwrite .btn + .btn {
+  margin-left: 1rem;
+}
+.ot-overwrite .btn.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.ot-overwrite .btn.btn-primary:hover {
+  background-color: var(--primary-color-l);
+  border-color: var(--primary-color-l);
+}
+.ot-overwrite .btn.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: var(--primary-color-d);
+  border-color: var(--primary-color-d);
+}
+
+.ot-overwrite .table{
+  border: 1px solid var(--grey-color-l);
+  margin: 0;
+}
+.ot-overwrite .table + .table{
+  margin-top: 1rem;
+}
+.ot-overwrite .table th{
+  background-color: var(--grey-color-l);
+  border-color: var(--grey-color-l);
+  font-weight: normal;
+}
+.ot-overwrite .table td{
+  background-color: var(--white-color);
+}
+.ot-overwrite .table.table-prof th{
+  width: 30%;
+}
+
+.ot-overwrite .page-item {
+  cursor: pointer;
+}
+.ot-overwrite .page-item .page-link:hover,
+.ot-overwrite .page-item.active .page-link:hover {
+  color: var(--white-color);
+  background-color: var(--primary-color-l);
+  border-color: var(--primary-color-l);
+}
+.ot-overwrite .page-item.active .page-link {
+  background-color: var(--primary-color-d);
+  border-color: var(--primary-color-d);
+}
+
+.ot-overwrite .custom-control-input ~ .custom-control-label {
+  cursor: pointer;
+}
+.ot-overwrite .custom-control-input:disabled ~ .custom-control-label {
+  cursor: not-allowed;
+}
+.ot-overwrite .custom-control-input:checked~.custom-control-label::before {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.ot-overwrite .custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::before {
+  opacity: 0.5;
+  background-color: var(--primary-color);
+}

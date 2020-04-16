@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>統計圖 - 長條圖</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/fontawesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/apexcharts/apexcharts.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="chart_bar">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">統計圖</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">長條圖</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div id="block_basic"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('basic')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">基本</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_basic" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_grouped"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('grouped')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">分組</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_grouped" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_customized"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('customized')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">客製化標籤</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_customized" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_opposite"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('opposite')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">雙向</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_opposite" class="block_chart"></div>
+      </div>
+    </div>
+  </div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/chart.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./libs/apexcharts/apexcharts.min.js"></script>
+
+<script type="text/javascript">
+var chartList = {
+  basic: undefined,
+  grouped: undefined,
+  customized: undefined,
+  opposite: undefined
+}
+
+$(document).ready(function (){
+  setCharts();
+  render();
+});
+
+function setCharts () {
+  setBasic();
+  setGrouped();
+  setCustomized();
+  setOpposite();
+};
+
+function render () {
+  toggleChart('basic', true);
+  toggleChart('grouped', false);
+  toggleChart('customized', false);
+  toggleChart('opposite', false);
+};
+
+function setBasic () {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    series: [{
+      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    }],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+    }
+  }
+
+  chartList['basic'] = new ApexCharts(
+    document.querySelector("#chart_basic"),
+    options
+  );
+}
+function setGrouped () {
+  var options = {
+    chart: {
+      height: 430,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        dataLabels: {
+          position: 'top',
+        },
+      }  
+    },
+    dataLabels: {
+      enabled: true,
+      offsetX: -6,
+      style: {
+        fontSize: '12px',
+        colors: ['#fff']
+      }
+    },
+    stroke: {
+      show: true,
+      width: 1,
+      colors: ['#fff']
+    },
+    series: [{
+      data: [44, 55, 41, 64, 22, 43, 21]
+    },{
+      data: [53, 32, 33, 52, 13, 44, 32]
+    }],
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      categories: [2001, 2002, 2003, 2004, 2005, 2006, 2007],
+    }
+  }
+
+
+  chartList['grouped'] = new ApexCharts(
+    document.querySelector("#chart_grouped"),
+    options
+  );
+}
+function setCustomized () {
+  var options = {
+    chart: {
+      height: 380,
+      type: 'bar'
+    },
+    plotOptions: {
+      bar: {
+        barHeight: '100%',
+        distributed: true,
+        horizontal: true,
+        dataLabels: {
+          position: 'bottom'
+        },
+      }
+    },
+    colors: js_chartColor, // customized color map
+    dataLabels: {
+      enabled: true,
+      textAnchor: 'start',
+      style: {
+        colors: ['#000']
+      },
+      formatter: function(val, opt) {
+        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+      },
+      offsetX: 0,
+      dropShadow: {
+        enabled: false
+      }
+    },
+    series: [{
+      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    }],
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
+    xaxis: {
+      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'India'],
+    },
+    yaxis: {
+      labels: {
+        show: false
+      }
+    },
+    title: {
+      text: 'Custom DataLabels',
+      align: 'center',
+      floating: true
+    },
+    subtitle: {
+      text: 'Category Names as DataLabels inside bars',
+      align: 'center',
+    },
+    tooltip: {
+      theme: 'dark',
+      x: {
+        show: false
+      },
+      y: {
+        title: {
+          formatter: function() {
+            return ''
+          }
+        }
+      }
+    }
+  }
+
+  chartList['customized'] = new ApexCharts(
+    document.querySelector("#chart_customized"),
+    options
+  );
+}
+function setOpposite () {
+  var options = {
+    chart: {
+      height: 440,
+      type: 'bar',
+      stacked: true
+    },
+    colors: [js_chartColor[2],js_chartColor[0]], // customized color map
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: '80%',
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      width: 1,
+      colors: ["#fff"]
+    },
+    series: [
+      {
+        name: 'Females',
+        data: [-0.8, -1.05, -1.06, -1.18, -1.4, -2.2, -2.85, -3.7, -3.96, -4.22, -4.3, -4.4, -4.1, -4, -4.1, -3.4, -3.1, -2.8]
+      },  
+      {
+        name: 'Males',
+        data: [0.4, 0.65, 0.76, 0.88, 1.5, 2.1, 2.9, 3.8, 3.9, 4.2, 4, 4.3, 4.1, 4.2, 4.5, 3.9, 3.5, 3]
+      }
+    ],
+    grid: {
+      xaxis: {
+        showLines: false
+      }
+    },
+    yaxis: {
+      min: -5,
+      max: 5,
+      title: {
+        // text: 'Age',
+      },
+    },
+    tooltip: {
+      shared: false,
+      x: {
+        formatter: function(val) {
+          return val
+        }
+      },
+      y: {
+        formatter: function(val) {
+          return Math.abs(val) + "%"
+        }
+      }
+    },
+    title: {
+      text: 'Mauritius population pyramid 2011'
+    },
+    xaxis: {
+      categories: ['85+', '80-84', '75-79', '70-74', '65-69', '60-64', '55-59', '50-54', '45-49', '40-44', '35-39', '30-34', '25-29', '20-24', '15-19', '10-14', '5-9', '0-4'],
+      title: {
+        text: 'Percent'
+      },
+      labels: {
+        formatter: function(val) {
+          return Math.abs(Math.round(val)) + "%"
+        }
+      }
+    },
+  }
+
+  chartList['opposite'] = new ApexCharts(
+    document.querySelector("#chart_opposite"),
+    options
+  );
+}
+
+function toggleChart(id, trig) {
+  var trigger = false;
+  var count;
+  if(trig)
+  {
+    trigger = trig;
+  } else {
+    trigger = $('#block_'+id).hasClass('collapsed');
+  };
+  switch(id)
+  {
+    default:
+      if(trigger)
+      {
+        $('#block_'+id).removeClass('collapsed');
+        if(!$('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].render();
+          $('#chart_'+id).addClass('rendered');
+        }
+      } else {
+        $('#block_'+id).addClass('collapsed');
+        if($('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].destroy();
+          $('#chart_'+id).removeClass('rendered');
+        }
+      };
+      break;
+  };
+};
+</script>
+</body>
+</html>

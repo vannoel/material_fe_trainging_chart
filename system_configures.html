@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>管理後台 - 環境設定</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="./libs/fontawesome/css/all.min.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="system_configures">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">系統設定</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">環境設定</span>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div class="block">
+      <div class="block_head">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-wrench fa-fw"></i>
+          </span>
+          <span class="title_item">環境設定</span>
+        </div>
+      </div>
+      <div class="block_content">
+        <form>
+          <div class="form-group row">
+            <div class="col-sm-9 text-right">
+              <button class="btn btn-outline-secondary mb-3" type="button" onClick="cancelmodify()">取消</button>
+              <button class="btn btn-primary mb-3" id="submitBtn" type="button">送出</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function (){
+  render();
+});
+
+function render () {
+};
+
+function cancelmodify () {
+  self.location.href = self.location.href;
+};
+</script>
+</body>
+</html>

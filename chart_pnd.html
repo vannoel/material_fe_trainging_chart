@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>統計圖 - 圓餅圖</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/fontawesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/apexcharts/apexcharts.css">
+<style>
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="chart_pnd">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">統計圖</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">圓餅/甜圈圖</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div id="block_pie"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('pie')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-pie fa-fw"></i>
+          </span>
+          <span class="title_item">圓餅圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_pie" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_monochrome"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('monochrome')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-pie fa-fw"></i>
+          </span>
+          <span class="title_item">單色</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_monochrome" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_donut"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('donut')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-pie fa-fw"></i>
+          </span>
+          <span class="title_item">甜圈圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_donut" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_texture"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('texture')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-pie fa-fw"></i>
+          </span>
+          <span class="title_item">填滿質地</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_texture" class="block_chart"></div>
+      </div>
+    </div>
+  </div>
+
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/chart.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./libs/apexcharts/apexcharts.min.js"></script>
+
+<script type="text/javascript">
+var chartList = {
+  pie: undefined,
+  monochrome: undefined,
+  donut: undefined,
+  texture: undefined
+}
+
+$(document).ready(function (){
+  setCharts();
+  render();
+});
+
+function setCharts() {
+  setPie();
+  setMonochrome();
+  setDonut();
+  setTexture();
+};
+
+function render () {
+  toggleChart('pie', true);
+  toggleChart('monochrome', false);
+  toggleChart('donut', true);
+  toggleChart('texture', false);
+};
+
+function setPie () {
+  var options = {
+    chart: {
+      height: 250,
+      type: 'pie',
+    },
+    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    series: [44, 55, 13, 43, 22],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }],
+    colors: js_chartColor, // customized color map
+  }
+
+  chartList['pie'] = new ApexCharts(
+    document.querySelector("#chart_pie"),
+    options
+  );
+}
+function setMonochrome () {
+  var options = {
+    chart: {
+      height: 250,
+      type: 'pie',
+    },
+    series: [25, 15, 44, 55, 41, 17],
+    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    theme: {
+      monochrome: {
+        enabled: true,
+        color: js_chartColor[1], // customized color map
+      }
+    },
+    title: {
+      text: "Number of leads"
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }],
+    // colors: js_chartColor[1], // customized color map *** here will not work
+  }
+
+  chartList['monochrome'] = new ApexCharts(
+    document.querySelector("#chart_monochrome"),
+    options
+  );
+}
+function setDonut () {
+  var options = {
+    chart: {
+      height: 250,
+      type: 'donut',
+    },
+    series: [44, 55, 41, 17, 15],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }],
+    colors: js_chartColor, // customized color map
+  }
+
+  chartList['donut'] = new ApexCharts(
+    document.querySelector("#chart_donut"),
+    options
+  );
+}
+function setTexture () {
+  var options = {
+    chart: {
+      height: 250,
+      type: 'donut',
+      dropShadow: {
+        enabled: true,
+        color: '#111',
+        top: -1,
+        left: 3,
+        blur: 3,
+        opacity: 0.2
+      }
+    },
+    stroke: {
+      width: 0,
+    },
+    series: [44, 55, 41, 17, 15],
+    labels: ["Comedy", "Action", "SciFi", "Drama", "Horror"],
+    dataLabels: {
+      dropShadow: {
+        blur: 3,
+        opacity: 0.8
+      }
+    },
+    fill: {
+    type: 'pattern',
+      opacity: 1,
+      pattern: {
+        enabled: true,
+        style: ['verticalLines', 'squares', 'horizontalLines', 'circles','slantedLines'], 
+      },
+    },
+    states: {
+      hover: {
+        enabled: false
+      }
+    },
+    theme: {
+      palette: 'palette2'
+    },
+    title: {
+      text: "Favourite Movie Type"
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }],
+    colors: js_chartColor, // customized color map
+  }
+
+  chartList['texture'] = new ApexCharts(
+      document.querySelector("#chart_texture"),
+      options
+  );
+}
+
+function toggleChart(id, trig) {
+  var trigger = false;
+  var count;
+  if(trig)
+  {
+    trigger = trig;
+  } else {
+    trigger = $('#block_'+id).hasClass('collapsed');
+  };
+  switch(id)
+  {
+    default:
+      if(trigger)
+      {
+        $('#block_'+id).removeClass('collapsed');
+        if(!$('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].render();
+          $('#chart_'+id).addClass('rendered');
+        }
+      } else {
+        $('#block_'+id).addClass('collapsed');
+        if($('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].destroy();
+          $('#chart_'+id).removeClass('rendered');
+        }
+      };
+      break;
+  };
+};
+</script>
+</body>
+</html>

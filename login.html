@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>管理後台 - 登入</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<style>
+  #login {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    min-height: 100vh;
+  }
+  .body-login {
+    background-color: var(--primary-color-ddd);
+    color: var(--primary-color-lll);
+  }
+  .login_form {
+    background-color: var(--primary-color-dd);
+    border-radius: 0.5rem;
+  }
+  .login_buttonGroup {
+    margin: 2rem 0;
+    text-align: right;
+  }
+</style>
+</head>
+<body class="body body-login ot-overwrite">
+<div id="login">
+  <div class="container row justify-content-center">
+    <form class="login_form col-lg-4 mb-3">
+      <div class="form-row">
+        <div class="col-12">
+          <label for="account">帳號</label>
+          <input type="text" class="form-control" id="account" placeholder="請輸入帳號" value="">
+          <div id="account_invalid_msg" class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-12">
+          <label for="password">密碼</label>
+          <input type="password" class="form-control" id="password" placeholder="請輸入密碼" value="">
+          <div id="password_invalid_msg" class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="form-row login_buttonGroup">
+        <div class="col-12">
+          <button class="btn btn-primary" id="submitBtn" type="button" onClick="checkBeforeSubmit()">登入</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/router.js"></script>
+<script type="text/javascript" src="./assets/js/account.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+function checkBeforeSubmit () {
+  // if(!checkAccount()
+  //   || !checkPassword())
+  // {
+  //   // TODO: Submit
+  //   // console.log('fail')
+  // }
+  // console.log('success')
+  self.document.location.href = js_router.get('home').path;
+};
+
+function checkAccount () {
+  if('' === $('#account').val()) {
+    $('#account_invalid_msg').html('請輸入帳號');
+    $('#account').removeClass('is-valid').addClass('is-invalid');
+    return false;
+  };
+  $('#account').addClass('is-valid').removeClass('is-invalid');
+  return true;
+};
+function checkPassword () {
+  if('' === $('#password').val()) {
+    $('#password_invalid_msg').html('請輸入密碼');
+    $('#password').removeClass('is-valid').addClass('is-invalid');
+    return false;
+  };
+  $('#password').addClass('is-valid').removeClass('is-invalid');
+  return true;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>統計圖 - 複合圖</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="stylesheet" type="text/css" href="./assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/fontawesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="./libs/apexcharts/apexcharts.css">
+<style>
+#block_line_histogram_area .apexcharts-legend {
+  overflow: hidden !important;
+  min-height: 17px;
+}
+#block_line_histogram_area .apexcharts-legend-marker {
+  background: none !important;
+  margin-right: 7px !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+#block_line_histogram_area .apexcharts-legend-series {
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
+#chart_multipleY .apexcharts-tooltip {
+  display: none;
+}
+</style>
+</head>
+<body class="body body-subpage ot-overwrite">
+<div id="chart_mixed">
+  <div class="wrapper_head container-fluid">
+    <div class="head_title">
+      <span class="title_item title-layer1">統計圖</span>
+      <span class="title_item title-separator"><i class="fas fa-angle-double-right fa-fw"></i></span>
+      <span class="title_item title-layer2">複合圖</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wrapper_body container-fluid">
+    <div id="block_line_histogram"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('line_histogram')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">折線圖 + 直方圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_line_histogram" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_line_area"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('line_area')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">折線圖 + 面積圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_line_area" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_line_scatter"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('line_scatter')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">折線圖 + 點狀圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_line_scatter" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="block_line_histogram_area"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('line_histogram_area')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">折線圖 + 直方圖 + 面積圖</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_line_histogram_area" class="block_chart"></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    
+    <div id="block_multipleY"
+          class="block">
+      <div class="block_head click-enable"
+            onClick="toggleChart('multipleY')">
+        <div class="block_title">
+          <span class="title_item item-icon">
+            <i class="fas fa-chart-bar fa-fw"></i>
+          </span>
+          <span class="title_item">多重 Y 軸</span>
+        </div>
+        <div class="block_toggler">
+          <i class="fas fa-angle-down fa-fw"></i>
+        </div>
+      </div>
+      <div class="block_content">
+        <div id="chart_multipleY" class="block_chart"></div>
+      </div>
+    </div>
+  </div>
+
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./assets/js/chart.js"></script>
+
+<script type="text/javascript" src="./libs/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./libs/apexcharts/apexcharts.min.js"></script>
+
+<script type="text/javascript">
+var chartList = {
+  line_histogram: undefined,
+  line_area: undefined,
+  line_scatter: undefined,
+  line_histogram_area: undefined,
+  multipleY: undefined
+}
+
+$(document).ready(function (){
+  setCharts();
+  render();
+});
+
+function setCharts() {
+  setLineHistogram();
+  setLineArea();
+  setLineScatter();
+  setLineHistogramArea();
+  setMultipleY();
+};
+
+function render () {
+  toggleChart('line_histogram', false);
+  toggleChart('line_area', false);
+  toggleChart('line_scatter', false);
+  toggleChart('line_histogram_area', false);
+  toggleChart('multipleY', false);
+};
+
+function setLineHistogram () {
+  var options = {
+    chart: {
+      height: 300,
+      // type: 'line', here will not work
+    },
+    series: [{
+      name: 'Website Blog',
+      type: 'column',
+      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+    }, {
+      name: 'Social Media',
+      type: 'line',
+      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+    }],
+    stroke: {
+      width: [0, 4]
+    },
+    title: {
+      text: 'Traffic Sources'
+    },
+    // labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+    xaxis: {
+      type: 'datetime'
+    },
+    colors: js_chartColor, // customized color map
+    yaxis: [{
+      title: {
+        text: 'Website Blog',
+      },
+
+    }, {
+      opposite: true,
+      title: {
+        text: 'Social Media'
+      }
+    }]
+
+  }
+
+  chartList['line_histogram'] = new ApexCharts(
+    document.querySelector("#chart_line_histogram"),
+    options
+  );
+}
+function setLineArea () {
+  var options = {
+    chart: {
+      height: 300,
+      // type: 'line', here will not work
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+      
+    series: [{
+      name: 'TEAM A',
+      type: 'area',
+      data: [44, 55, 31, 47, 31, 43, 26, 41, 31, 47, 33]
+    }, {
+      name: 'TEAM B',
+      type: 'line',
+      data: [55, 69, 45, 61, 43, 54, 37, 52, 44, 61, 43]
+    }],
+    fill: {
+      type:'solid',
+      opacity: [0.35, 1],
+    },
+    labels: ['Dec 01', 'Dec 02','Dec 03','Dec 04','Dec 05','Dec 06','Dec 07','Dec 08','Dec 09 ','Dec 10','Dec 11'],
+    markers: {
+      size: 0
+    },
+    colors: js_chartColor, // customized color map
+    yaxis: [
+      {
+        title: {
+          text: 'Series A',
+        },
+      },
+      {
+        opposite: true,
+        title: {
+          text: 'Series B',
+        },
+      },
+    ],
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: function (y) {
+          if(typeof y !== "undefined") {
+            return  y.toFixed(0) + " points";
+          }
+          return y;
+          
+        }
+      }
+    }
+  }
+
+  chartList['line_area'] = new ApexCharts(
+    document.querySelector("#chart_line_area"),
+    options
+  );
+}
+function setLineScatter () {
+  var options = {
+    chart: {
+      height: 350,
+      // type: 'line', here will not work
+    },
+    series: [{
+      name: 'Points',
+      type: 'scatter',
+      //2.14, 2.15, 3.61, 4.93, 2.4, 2.7, 4.2, 5.4, 6.1, 8.3
+      data: [{
+        x: 1,
+        y: 2.14
+      }, {
+        x: 1.2,
+        y: 2.19
+      }, {
+        x: 1.8,
+        y: 2.43
+      }, {
+        x: 2.3,
+        y: 3.8
+      }, {
+        x: 2.6,
+        y: 4.14
+      }, {
+        x: 2.9,
+        y: 5.4
+      }, {
+        x: 3.2,
+        y: 5.8
+      }, {
+        x: 3.8,
+        y: 6.04
+      }, {
+        x: 4.55,
+        y: 6.77
+      }, {
+        x: 4.9,
+        y: 8.1
+      }, {
+        x: 5.1,
+        y: 9.4
+      }, {
+        x: 7.1,
+        y: 7.14
+      },{
+        x: 9.18,
+        y: 8.4
+      }]
+    }, {
+      name: 'Line',
+      type: 'line',
+      data: [{
+        x: 1,
+        y: 2
+      }, {
+        x: 2,
+        y: 3
+      }, {
+        x: 3,
+        y: 4
+      }, {
+        x: 4,
+        y: 5
+      }, {
+        x: 5,
+        y: 6
+      }, {
+        x: 6,
+        y: 7
+      }, {
+        x: 7,
+        y: 8
+      }, {
+        x: 8,
+        y: 9
+      }, {
+        x: 9,
+        y: 10
+      }, {
+        x: 10,
+        y: 11
+      }]
+    }],
+    fill: {
+      type:'solid',
+    },
+    markers: {
+      size: [6, 0]
+    },
+    tooltip: {
+      shared: false,
+      intersect: true,
+    },
+    legend: {
+      show: false
+    },
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      type: 'numeric',
+      min: 0,
+      max: 12,
+      tickAmount: 12
+    }
+  }
+
+  chartList['line_scatter'] = new ApexCharts(
+    document.querySelector("#chart_line_scatter"),
+    options
+  );
+}
+function setLineHistogramArea () {
+  var options = {
+    chart: {
+      height: 350,
+      stacked: false,
+    },
+    stroke: {
+      width: [0, 2, 5],
+      curve: 'smooth'
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '50%'
+      }
+    },
+    series: [{
+      name: 'Facebook',
+      type: 'column',
+      data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
+    }, {
+      name: 'Vine',
+      type: 'area',
+      data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
+    }, {
+      name: 'Dribbble',
+      type: 'line',
+      data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
+    }],
+    fill: {
+      opacity: [0.85,0.25,1],
+      gradient: {
+        inverseColors: false,
+        shade: 'light',
+        type: "vertical",
+        opacityFrom: 0.85,
+        opacityTo: 0.55,
+        stops: [0, 100, 100, 100]
+      }
+    },
+    labels: ['01/01/2003', '02/01/2003','03/01/2003','04/01/2003','05/01/2003','06/01/2003','07/01/2003','08/01/2003','09/01/2003','10/01/2003','11/01/2003'],
+    markers: {
+      size: 0
+    },
+    colors: js_chartColor, // customized color map
+    xaxis: {
+      type:'datetime'
+    },
+    yaxis: {
+      min: 0
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: function (y) {
+          if(typeof y !== "undefined") {
+            return  y.toFixed(0) + " views";
+          }
+          return y;
+        }
+      }
+    },
+    legend: {
+      labels: {
+        useSeriesColors: true
+      },
+      markers: {
+        customHTML: [
+          // it required style
+          function() {
+            return '<i class="fab fa-facebook-square"></i>'
+          }, function() {
+            return '<i class="fab fa-vine"></i>'
+          }, function() {
+            return '<i class="fab fa-dribbble"></i>'
+          }
+        ]
+      }
+    }
+  }
+
+  chartList['line_histogram_area'] = new ApexCharts(
+    document.querySelector("#chart_line_histogram_area"),
+    options
+  );
+}
+function setMultipleY () {
+  var options = {
+    chart: {
+      height: 300,
+      stacked: false
+    },
+    dataLabels: {
+      enabled: false
+    },
+    series: [{
+      name: 'Income',
+      type: 'column',
+      data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
+    }, {
+      name: 'Cashflow',
+      type: 'column',
+      data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
+    }, {
+      name: 'Revenue',
+      type: 'line',
+      data: [20, 29, 37, 36, 44, 45, 50, 58]
+    }],
+    stroke: {
+      width: [1, 1, 4]
+    },
+    title: {
+      text: 'XYZ - Stock Analysis (2009 - 2016)',
+      align: 'left',
+    },
+    xaxis: {
+      categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
+    },
+    yaxis: [
+      {
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: '#008FFB'
+        },
+        labels: {
+          style: {
+            color: '#008FFB',
+          }
+        },
+        title: {
+          text: "Income (thousand crores)",
+          style: {
+            color: '#008FFB',
+          }
+        },
+        tooltip: {
+          enabled: true
+        }
+      },
+
+      {
+        seriesName: 'Income',
+        opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: '#00E396'
+        },
+        labels: {
+          style: {
+            color: '#00E396',
+          }
+        },
+        title: {
+          text: "Operating Cashflow (thousand crores)",
+          style: {
+            color: '#00E396',
+          }
+        },
+      },
+      {
+        seriesName: 'Revenue',
+        opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: '#FEB019'
+        },
+        labels: {
+          style: {
+            color: '#FEB019',
+          },
+        },
+        title: {
+          text: "Revenue (thousand crores)",
+          style: {
+            color: '#FEB019',
+          }
+        }
+      },
+    ],
+    colors: js_chartColor, // customized color map
+    legend: {
+      horizontalAlign: 'center',
+    }
+  }
+
+  chartList['multipleY'] = new ApexCharts(
+    document.querySelector("#chart_multipleY"),
+    options
+  );
+}
+
+function toggleChart(id, trig) {
+  var trigger = false;
+  var count;
+  if(trig)
+  {
+    trigger = trig;
+  } else {
+    trigger = $('#block_'+id).hasClass('collapsed');
+  };
+  switch(id)
+  {
+    default:
+      if(trigger)
+      {
+        $('#block_'+id).removeClass('collapsed');
+        if(!$('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].render();
+          $('#chart_'+id).addClass('rendered');
+        }
+      } else {
+        $('#block_'+id).addClass('collapsed');
+        if($('#chart_'+id).hasClass('rendered'))
+        {
+          chartList[id].destroy();
+          $('#chart_'+id).removeClass('rendered');
+        }
+      };
+      break;
+  };
+};
+</script>
+</body>
+</html>

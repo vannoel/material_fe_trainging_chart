@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<title>範本 - Steps</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="stylesheet" type="text/css" href="../../assets/style/index.css">
+<link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../libs/fontawesome/css/all.min.css">
+<style>
+  #sample-steps {
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .step-line {
+    height: 3rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    width: 100%;
+  }
+  .step-line::before {
+    content: '';
+    border-bottom: 2px solid var(--grey-color);
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+  .step-line > .node {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .node > .node_pointer {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--black-color);
+    border-radius: 1rem;
+    border: 0.1rem  solid var(--grey-color);
+  }
+  .node > .node_pointer::before {
+    -webkit-transition: background-color 0.5s ease-in-out;
+    -o-transition: background-color 0.5s ease-in-out;
+    transition: background-color 0.5s ease-in-out;
+    content: '';
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: transparent;
+    border-radius: 0.6rem;
+    top: calc(0.4rem - 0.1rem);
+    left: calc(0.4rem - 0.1rem);
+  }
+  .node > .node_title {
+    position: absolute;
+    color:  var(--grey-color-dd);
+    word-break: keep-all;
+    top: 3rem;
+  }
+  .node.active > .node_pointer::before {
+    background-color: var(--grey-color);
+  }
+  .step_content {
+    text-align: center;
+    display: none;
+  }
+</style>
+</head>
+<body class="body body-dark">
+<div id="sample-steps" class="container">
+  <div class="form-row justify-content-center p-3">
+    <div class="col-lg-4 col-md-6 mt-4 mb-4">
+      <div id="stepLine" class="step-line"></div>
+    </div>
+  </div>
+  <div class="form-row justify-content-center p-3">
+    <div class="col-lg-4 col-md-6">
+      <section id="step_0" class="step_content">
+        <div>Step 0</div>
+      </section>
+      <section id="step_1" class="step_content">
+        <div>Step 1</div>
+      </section>
+      <section id="step_2" class="step_content">
+        <div>Step 2</div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<noscript>Your browser does not support JavaScript!</noscript>
+
+<script type="text/javascript" src="./step.js"></script>
+<script type="text/javascript" src="../../libs/jquery/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function (){
+  render();
+});
+
+function render () {
+  renderStepLine();
+};
+
+function renderStepLine (){
+  var str = '';
+  var stepArr = js_step.list;
+  for(var i=0; i<stepArr.length; i++)
+  {
+    str += ('<div id="node_%index" class="node click-enable" onClick="stepUpdate(%index)"><div class="node_pointer"></div><div class="node_title">%title</div></div>')
+      .replace(/%index/g, stepArr[i].index)
+      .replace(/%title/g, stepArr[i].title);
+  };
+  $('#stepLine').html(str);
+
+  // init
+  stepUpdate(js_step.get());
+}
+function stepUpdate (index) {
+  js_step.set(index);
+  $('.node').removeClass('active');
+  $('#node_'+js_step.get()).addClass('active');
+  $('.step_content').not('#step_'+js_step.get()).hide();
+  $('#step_'+js_step.get()).fadeIn();
+};
+function redirect () {
+  document.location.href = js_router.get('home').path;
+};
+</script>
+</body>
+</html>
